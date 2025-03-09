@@ -71,3 +71,5 @@ def solution(s):
 
 for e in examples:
     print(solution(e))
+
+# %%
