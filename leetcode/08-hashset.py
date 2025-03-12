@@ -190,3 +190,77 @@ def solution(s):
 for e in examples:
     print(solution(e))
 
+# %% 2395. Find Subarrays With Equal Sum
+examples = [
+    [4, 2, 4],
+    [1, 2, 3, 4, 5],
+    [0, 0, 0]
+]
+
+
+def solution(nums):
+    # Time: O(n)
+    # Space: O(n)
+
+    seen = set()
+    ans = False
+
+    for i in range(len(nums) - 1):
+        # sum_now = nums[i - 1] + nums[i]
+        sum_now = nums[i] + nums[i + 1]
+        if sum_now in seen:
+            ans = True
+            break
+        seen.add(sum_now)
+
+    return ans
+
+
+for i, v in enumerate(examples):
+    print(f"Example: {i + 1}. Result: {solution(v)}")
+
+# %% 2729. Check if The Number is Fascinating
+examples = [192, 100, 783]
+
+
+def solution(n):
+    n_str = str(n) + str(n * 2) + str(n * 3)
+
+    if len(n_str) > 9 or '0' in n_str:
+        return False
+
+    unique_digits = set(n_str)
+    return len(unique_digits) == 9
+
+    # ans = False
+
+    # d_set = {i for i in range(1, 10)}
+    # n_str = str(n) + str(n * 2) + str(n * 3)
+    # n_set = {int(i) for i in n_str}
+    #
+    # if len(d_set - n_set) and len(n_str) > len(d_set):
+    #     return True
+    # return False
+
+    # if len(n_str) > len(d_set):
+    #     return False
+
+    # elif len(d_set - n_set) == 0:
+    #     return ans
+
+    # return True
+
+    # return True if len(d_set - n_set) == 0 else False
+    # return n_str, len(n_str)
+
+
+for i, v in enumerate(examples):
+    print(f"Example: {i + 1}. Values: {v}. Result: {solution(v)}")
+
+# %%
+n = 783
+n_2 = 783 * 2
+n_3 = 783 * 3
+print(f"{n}, {n_2}, {n_3}, {str(n) + str(n_2) + str(n_3)}")
+
+78315662349
