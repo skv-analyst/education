@@ -296,6 +296,7 @@ def solution_1(grid):
 
     return [repeat, missing]
 
+
 def solution_2(grid):
     n = len(grid)
     grid_digits = {i for i in range(1, n ** 2 + 1)}
@@ -309,9 +310,6 @@ def solution_2(grid):
 
     missing = (grid_digits - seen).pop()
     return [repeat, missing]
-
-
-
 
 
 for i, v in enumerate(examples):
