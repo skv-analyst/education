@@ -314,3 +314,4 @@ def solution_2(grid):
 
 for i, v in enumerate(examples):
     print(f"Example: {i + 1}. Values: {v}. Result: {solution_2(v)}")
+
