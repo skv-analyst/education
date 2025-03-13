@@ -190,3 +190,49 @@ def solution(s):
 for e in examples:
     print(solution(e))
 
+# %% 2395. Find Subarrays With Equal Sum
+examples = [
+    [4, 2, 4],
+    [1, 2, 3, 4, 5],
+    [0, 0, 0]
+]
+
+
+def solution(nums):
+    # Time: O(n)
+    # Space: O(n)
+
+    seen = set()
+    ans = False
+
+    for i in range(len(nums) - 1):
+        # sum_now = nums[i - 1] + nums[i]
+        sum_now = nums[i] + nums[i + 1]
+        if sum_now in seen:
+            ans = True
+            break
+        seen.add(sum_now)
+
+    return ans
+
+
+for i, v in enumerate(examples):
+    print(f"Example: {i + 1}. Result: {solution(v)}")
+
+# %% 2729. Check if The Number is Fascinating
+examples = [192, 100, 783]
+
+
+def solution(n):
+    n_str = str(n) + str(n * 2) + str(n * 3)
+
+    if len(n_str) > 9 or '0' in n_str:
+        return False
+
+    unique_digits = set(n_str)
+    return len(unique_digits) == 9
+
+for i, v in enumerate(examples):
+    print(f"Example: {i + 1}. Values: {v}. Result: {solution(v)}")
+
+# %%
