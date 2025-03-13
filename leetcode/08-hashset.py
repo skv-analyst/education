@@ -189,7 +189,6 @@ def solution(s):
 
 for e in examples:
     print(solution(e))
-
 # %% 2395. Find Subarrays With Equal Sum
 examples = [
     [4, 2, 4],
@@ -232,7 +231,88 @@ def solution(n):
     unique_digits = set(n_str)
     return len(unique_digits) == 9
 
+
 for i, v in enumerate(examples):
     print(f"Example: {i + 1}. Values: {v}. Result: {solution(v)}")
 
-# %%
+# %% 2956. Find Common Elements Between Two Arrays
+examples = [
+    {"nums1": [2, 3, 2], "nums2": [1, 2]},
+    {"nums1": [4, 3, 2, 3, 1], "nums2": [2, 2, 5, 2, 3, 6]},
+    {"nums1": [3, 4, 2, 3], "nums2": [1, 5]}
+]
+
+
+def solution(nums1, nums2):
+    # Time: O(n)
+    # Space: O(n)
+    def check(nums, nums_set):
+        ans = 0
+        for n in nums:
+            if n in nums_set:
+                ans += 1
+        return ans
+
+    ans1 = check(nums1, set(nums2))
+    ans2 = check(nums2, set(nums1))
+
+    return [ans1, ans2]
+
+
+for i, v in enumerate(examples):
+    print(f"Example: {i + 1}. Values: {v}. Result: {solution(**v)}")
+
+# %% 2965. Find Missing and Repeated Values
+examples = [
+    [[1, 3], [2, 2]],
+    [[9, 1, 7], [8, 9, 2], [3, 4, 6]]
+]
+
+
+def solution_1(grid):
+    rows = cols = len(grid)
+    grid_digits = {i for i in range(1, rows ** 2 + 1)}
+
+    # Time: O(n^2). Space: O(n)
+    grid_flat = []
+    for r in range(rows):
+        for c in range(cols):
+            grid_flat.append(grid[r][c])
+
+    # Time: O(n). Space: O(n)
+    seen = set()
+    repeat = 0
+    for d in grid_flat:
+        if d not in seen:
+            seen.add(d)
+        else:
+            repeat = d
+
+    # Time: O(n). Space: O(n)
+    missing = 0
+    for d in grid_digits:
+        if d not in grid_flat:
+            missing = d
+
+    return [repeat, missing]
+
+def solution_2(grid):
+    n = len(grid)
+    grid_digits = {i for i in range(1, n ** 2 + 1)}
+    seen = set()
+    repeat = 0
+    for row in grid:
+        for d in row:
+            if d in seen:
+                repeat = d
+            seen.add(d)
+
+    missing = (grid_digits - seen).pop()
+    return [repeat, missing]
+
+
+
+
+
+for i, v in enumerate(examples):
+    print(f"Example: {i + 1}. Values: {v}. Result: {solution_2(v)}")
