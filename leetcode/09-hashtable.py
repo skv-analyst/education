@@ -50,7 +50,6 @@ def solution_3(s):
             # Если символ не уникальный, то удаляем индекс
             db[c] = None
 
-
     return min((idx for idx in db.values() if idx is not None), default=-1)
 
 for i, v in enumerate(examples):
