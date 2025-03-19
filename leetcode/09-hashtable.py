@@ -258,3 +258,217 @@ def solution_3(words, chars):
 
 for i, v in enumerate(examples):
     print(f"Example: {i + 1}. Values: {v}. Result: {solution_3(**v)}")
+
+# %% 1207. Unique Number of Occurrences
+examples = [
+    [1, 2, 2, 1, 1, 3],
+    [1, 2],
+    [-3, 0, 1, -3, 1, 1, 1, -3, 10, 0]
+]
+
+
+def solution_1(arr):
+    # Time: O(n)
+    # Space: O(n)
+    def count_num(nums):
+        db = {}
+        for n in nums:
+            if n not in db:
+                db[n] = 1
+            else:
+                db[n] += 1
+        return db
+
+    counter = count_num(arr)
+    seen = set()
+    for _, value in counter.items():
+        if value not in seen:
+            seen.add(value)
+        else:
+            return False
+
+    return True
+
+
+from collections import Counter
+
+
+def solution_2(arr):
+    # Time: O(n)
+    # Space: O(n)
+    counter = Counter(arr)
+    seen = set()
+    for _, value in counter.items():
+        if value not in seen:
+            seen.add(value)
+        else:
+            return False
+
+    return True
+
+
+def solution_3(arr):
+    # Time: O(n)
+    # Space: O(n)
+    counts = Counter(arr).values()
+    return len(counts) == len(set(counts))
+
+
+for i, v in enumerate(examples):
+    print(f"Example: {i + 1}. Values: {v}. Result: {solution_3(v)}")
+
+# %% 1. Two Sum
+examples = [
+    {"nums": [2, 7, 11, 15], "target": 9},
+    {"nums": [3, 2, 4], "target": 6},
+    {"nums": [3, 3], "target": 6},
+    {"nums": [3, 2, 3], "target": 6}
+]
+
+
+def solution_1(nums, target):
+    # Time: O(n^2)
+    # Space: O(1)
+    for i in range(len(nums)):
+        for j in range(len(nums)):
+            if i != j and nums[i] + nums[j] == target:
+                return [i, j]
+
+    return None
+
+
+def solution_2(nums, target):
+    # Time: O(n)
+    # Space: O(n)
+
+    db = {}
+    for i, num in enumerate(nums):
+        db[num] = i
+
+    for i, num in enumerate(nums):
+        pair = target - num
+        if pair in db and db[pair] != i:
+            return [i, db[pair]]
+
+
+def solution_3(nums, target):
+    # Time: O(n)
+    # Space: O(n)
+
+    db = {}
+    for i, num in enumerate(nums):
+        pair = target - num
+        if pair in db:
+            return [i, db[pair]]
+
+        db[num] = i
+
+
+for i, v in enumerate(examples):
+    print(f"Example: {i + 1}. Values: {v}. Result: {solution_3(**v)}")
+
+# %% 1365. How Many Numbers Are Smaller Than the Current Number
+examples = [
+    [8, 1, 2, 2, 3],
+    [6, 5, 4, 8],
+    [7, 7, 7, 7]
+]
+
+
+def solution_1(nums):
+    # Time: O(n^2)
+    # Space: O(n)
+    ans = []
+    for num1 in nums:
+        cnt = 0
+        for num2 in nums:
+            if num2 < num1:
+                cnt += 1
+        ans.append(cnt)
+
+    return ans
+
+
+def solution_2(nums):
+    # Time: O(n^2)
+    # Space: O(n)
+    ans = []
+    nums_sorted = sorted(nums)  # O(n* log n)
+
+    for num in nums:
+        ans.append(nums_sorted.index(num))  # O(n^2)
+
+    return ans
+
+
+def solution_3(nums):
+    # Time: O(n*log_n)
+    # Space: O(n)
+    ans = []
+    nums_sorted = sorted(nums)  # O(n* log_n)
+
+    db = {}  # O(n)
+    for i, num in enumerate(nums_sorted):
+        if num not in db:
+            db[num] = i
+
+    for num in nums:
+        ans.append(db[num])  # O(1)
+
+    return ans
+
+
+for i, v in enumerate(examples):
+    print(f"Example: {i + 1}. Values: {v}. Result: {solution_3(v)}")
+
+# %% 1512. Number of Good Pairs
+examples = [
+    [1, 2, 3, 1, 1, 3],
+    [1, 1, 1, 1],
+    [1, 2, 3]
+]
+
+
+def solution_1(nums):
+    # Time: O(n^2)
+    # Space: O(1)
+    ans = 0
+    for i in range(len(nums)):
+        for j in range(i + 1, len(nums)):
+
+            if nums[i] == nums[j]:
+                ans += 1
+
+    return ans
+
+
+def solution_2(nums):
+    # Time: O(n)
+    # Space: O(n)
+    ans = 0
+    db = {}
+
+    for num in nums:
+        if num not in db:
+            db[num] = 1
+        else:
+            ans += db[num]
+            db[num] += 1
+
+    return ans
+
+from collections import Counter
+def solution_3(nums):
+    # Time: O(n)
+    # Space: O(n)
+    ans = 0
+    db = Counter()
+
+    for num in nums:
+        ans += db[num]
+        db[num] += 1
+
+    return ans
+
+for i, v in enumerate(examples):
+    print(f"Example: {i + 1}. Values: {v}. Result: {solution_3(v)}")
