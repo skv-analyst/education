@@ -457,7 +457,10 @@ def solution_2(nums):
 
     return ans
 
+
 from collections import Counter
+
+
 def solution_3(nums):
     # Time: O(n)
     # Space: O(n)
@@ -470,5 +473,110 @@ def solution_3(nums):
 
     return ans
 
+
 for i, v in enumerate(examples):
     print(f"Example: {i + 1}. Values: {v}. Result: {solution_3(v)}")
+
+# %% 2006. Count Number of Pairs With Absolute Difference K
+examples = [
+    {"nums": [1, 2, 2, 1], "k": 1}
+]
+
+
+def solution_1(nums, k):
+    # Time: O(n^2)
+    # Space: O(1)
+    ans = 0
+    for i in range(len(nums)):
+        for j in range(len(nums)):
+            if nums[i] < nums[j] and abs(nums[i] - nums[j]) == k:
+                ans += 1
+
+    return ans
+
+
+def solution_2(nums, k):
+    # Time: O(n)
+    # Space: O(1)
+    ans = 0
+    db = {}
+
+    for num in nums:
+        pair1 = num - k
+        pair2 = num + k
+
+        if pair1 in db:
+            ans += db[pair1]
+
+        if pair2 in db:
+            ans += db[pair2]
+
+        if num in db:
+            db[num] += 1
+        else:
+            db[num] = 1
+    return ans
+
+
+from collections import Counter
+
+
+def solution_3(nums, k):
+    # Time: O(n)
+    # Space: O(n)
+    ans = 0
+    db = Counter()
+
+    for num in nums:
+        pair1 = num - k
+        pair2 = num + k
+
+        ans += db[pair1]
+        ans += db[pair2]
+
+        db[num] += 1
+
+    return ans
+
+
+for i, v in enumerate(examples):
+    print(f"Example: {i + 1}. Values: {v}. Result: {solution_3(**v)}")
+
+# %% 49. Group Anagrams
+examples = [
+    ["eat", "tea", "tan", "ate", "nat", "bat"]
+]
+
+
+def solution_1(strs):
+    # Time: O(n * k * log_k)
+    # Space: O(n * k)
+    db = {}
+    for s in strs:
+        key = tuple(sorted(s))
+
+        if key in db:
+            db[key].append(s)
+        else:
+            db[key] = [s]
+
+    return list(db.values())
+
+
+from collections import defaultdict
+
+
+# from dataclasses import List
+def solution_2(strs):
+    # Time: O(n * k * log_k)
+    # Space: O(n * k)
+    db = defaultdict(list)
+    for s in strs:
+        key = tuple(sorted(s))
+        db[key].append(s)
+
+    return list(db.values())
+
+
+for i, v in enumerate(examples):
+    print(f"Example: {i + 1}. Values: {v}. Result: {solution_2(v)}")
