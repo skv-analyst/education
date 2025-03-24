@@ -580,3 +580,231 @@ def solution_2(strs):
 
 for i, v in enumerate(examples):
     print(f"Example: {i + 1}. Values: {v}. Result: {solution_2(v)}")
+
+# %% 2283. Check if Number Has Equal Digit Count and Digit Value
+examples = [
+    "1210",
+    "030"
+]
+
+
+def solution_1(num):
+    # Time: O(n^2)
+    # Space: O(1)
+    for i in range(len(num)):
+        n_await = int(num[i])
+        n_fact = 0
+
+        for j in range(len(num)):
+            if str(i) == num[j]:
+                n_fact += 1
+
+        if n_fact != n_await:
+            return False
+    return True
+
+
+def solution_2(num):
+    # Time: O(n)
+    # Space: O(n)
+
+    db = {}
+    for n in num:
+        db[n] = db.get(n, 0) + 1
+
+    for i in range(len(num)):
+        n_await = int(num[i])
+        n_fact = db.get(str(i), 0)
+        if n_fact != n_await:
+            return False
+
+    return True
+
+
+for i, v in enumerate(examples):
+    print(f"Example: {i + 1}. Values: {v}. Result: {solution_2(v)}")
+
+# %% 2325. Decode the Message
+import string
+
+examples = [
+    {"key": "the quick brown fox jumps over the lazy dog", "message": "vkbs bs t suepuv"},
+    {"key": "eljuxhpwnyrdgtqkviszcfmabo", "message": "zwx hnfx lqantp mnoeius ycgk vcnjrd"}
+]
+
+
+def solution_1(key, message):
+    # Time: O(n)
+    # Space: O(n)
+    alphabet = string.ascii_lowercase
+    alphabet_code = []
+    ans = ''
+    for k in key.replace(' ', ''):
+        if k not in alphabet_code:
+            alphabet_code.append(k)
+
+    db = {}
+    for ac, a in zip(alphabet_code, alphabet):
+        db[ac] = a
+
+    for m in message:
+        if m != ' ':
+            ans += db[m]
+        else:
+            ans += ' '
+
+    return ans
+
+
+def solution_2(key, message):
+    db = {}
+    alphabet_index = 0
+
+    for char in key:
+        if char == ' ':
+            continue
+        if char not in db:
+            db[char] = string.ascii_lowercase[alphabet_index]
+            alphabet_index += 1
+
+    result = []
+    for char in message:
+        if char != ' ':
+            result.append(db[char])
+        else:
+            result.append(' ')
+
+    return ''.join(result)
+
+
+for i, v in enumerate(examples):
+    print(f"Example: {i + 1}. Values: {v}. Result: {solution_2(**v)}")
+
+# %%2404. Most Frequent Even Element
+examples = [
+    [0, 1, 2, 2, 4, 4, 1],
+    [4, 4, 4, 9, 2, 4],
+    [29, 47, 21, 41, 13, 37, 25, 7]
+]
+
+
+def solution_1(nums):
+    # Time: O(n)
+    # Space: O(n)
+    ans = -1
+    db = {}
+
+    for n in nums:
+        if n % 2 == 0:
+            db[n] = db.get(n, 0) + 1
+
+    if db.values():
+        max_cnt = max(db.values())
+        ans = min([key for key, value in db.items() if value == max_cnt])
+        return ans
+
+    else:
+        return ans
+
+
+def solution_2(nums):
+    db = {}
+    max_freq = 0
+    min_num = float('inf')
+
+    for n in nums:
+        if n % 2 == 0:
+            db[n] = db.get(n, 0) + 1
+            if db[n] > max_freq or (db[n] == max_freq and n < min_num):
+                max_freq = db[n]
+                min_num = n
+
+    return min_num if min_num != float('inf') else -1
+
+
+for i, v in enumerate(examples):
+    print(f"Example: {i + 1}. Values: {v}. Result: {solution_2(v)}")
+
+# %% 2068. Check Whether Two Strings are Almost Equivalent
+import string
+
+examples = [
+    {"word1": "aaaa", "word2": "bccb"},
+    {"word1": "abcdeef", "word2": "abaaacc"},
+    {"word1": "cccddabba", "word2": "babababab"}
+]
+
+
+def solution_1(word1, word2):
+    # Time: O(n)
+    # Space: O(n)
+    db1, db2 = {}, {}
+    alphabet = {c: 0 for c in string.ascii_lowercase}
+
+    for c1, c2 in zip(word1, word2):
+        db1[c1] = db1.get(c1, 0) + 1
+        db2[c2] = db2.get(c2, 0) + 1
+
+    for c in alphabet:
+        if abs(db1.get(c, 0) - db2.get(c, 0)) > 3:
+            return False
+    return True
+
+
+from collections import defaultdict
+
+
+def solution_2(word1, word2):
+    # Time: O(n)
+    # Space: O(n)
+    diff = defaultdict(int)
+
+    for c1, c2 in zip(word1, word2):
+        diff[c1] += 1  # Увеличиваем частоту для символа из word1
+        diff[c2] -= 1  # Уменьшаем частоту для символа из word2
+
+    # Проверяем, что разница частот для всех символов не превышает 3
+    for count in diff.values():
+        if abs(count) > 3:
+            return False
+
+    return True
+
+
+for i, v in enumerate(examples):
+    print(f"Example: {i + 1}. Values: {v}. Result: {solution_2(**v)}")
+
+# %% 1189. Maximum Number of Balloons
+examples = [
+    "balloon",
+    # "nlaebolko",
+    # "loonbalxballpoon",
+    # "leetcode"
+]
+
+from collections import Counter
+def solution_1(text):
+    text_cnt = Counter(text)
+    balloon_cnt = Counter("balloon")
+    max_instances = float('inf')
+
+    for char in balloon_cnt:
+        if char not in text_cnt:
+            return 0
+        max_instances = min(max_instances, text_cnt[char] // balloon_cnt[char])
+    return max_instances
+
+
+for i, v in enumerate(examples):
+    print(f"Example: {i + 1}. Values: {v}. Result: {solution_1(v)}")
+
+# text_cnt = Counter(text)
+# balloon_cnt = Counter("balloon")
+# max_instances = float('inf')
+#
+# for char in balloon_cnt:
+#     if char not in text_cnt:
+#         return 0
+#     max_instances = min(max_instances, text_cnt[char] // balloon_cnt[char])
+#
+# return max_instances
