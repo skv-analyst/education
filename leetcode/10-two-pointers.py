@@ -259,6 +259,77 @@ def solution_5_1(s):
     return ans
 
 
+# 2540. Minimum Common Value
+examples_2540 = [
+    {"nums1": [1, 2, 3], "nums2": [2, 4]},  # -> 2
+    {"nums1": [1, 2, 3, 6], "nums2": [2, 3, 4, 5]},  # -> 2
+    {"nums1": [1, 2, 3], "nums2": [4, 5, 6]}  # -> -1
+]
+
+
+def solution_2540_1(nums1, nums2):
+    # Time: O(n + m)
+    # Space: O(n + m)
+    common = set(nums1) & set(nums2)
+    if len(common) > 0:
+        return min(common)
+    return - 1
+
+
+def solution_2540_2(nums1, nums2):
+    # Time: O(n + m)
+    # Space: O(1)
+    i, j = 0, 0
+    common = - 1
+
+    while i < len(nums1) and j < len(nums2):
+        if nums1[i] == nums2[j]:
+            common = nums1[i]
+            break
+
+        elif nums1[i] < nums2[j]:
+            i += 1
+
+        elif nums1[i] > nums2[j]:
+            j += 1
+
+    return common
+
+
+# 2441. Largest Positive Integer That Exists With Its Negative
+examples_2441 = [
+    # [-1, 2, -3, 3],  # [-3, -1, 2, 3]
+    # [-1, 10, 6, 7, -7, 1],  # [-7, -1, 1, 6, 7, 10]
+    # [-10, 8, 6, 7, -2, -3],  # [-10, -3, -2, 6, 7, 8]
+    [-104, -449, -318, -930, -195, 579, -410, 822, -814, -388, -863, 174, -814, 919, -877, 993, 741, 741, -623, -4, -4,
+     542, 997, 239, 447, -317, 409, -487, -34, 6, -914, 607, -622, 915, 573, 666, -229, 165, 841, -820, 703]
+]
+
+
+def solution_2441(nums):
+    # Time: O(n)
+    # Space: O(1)
+    ans = -1
+    nums.sort()  # O(n log_n)
+    l, r = 0, len(nums) - 1
+
+    while nums[l] < 0 and nums[r] > 0:
+        l_abs = abs(nums[l])
+        r_abs = abs(nums[r])
+
+        if l_abs == r_abs:
+            ans = nums[r]
+            break
+
+        elif l_abs < r_abs:
+            r -= 1
+
+        elif l_abs > r_abs:
+            l += 1
+
+    return ans
+
+
 if __name__ == "__main__":
     # show_result(examples_354, solution_345)
     # show_result(examples_125, solution_125)
@@ -270,4 +341,7 @@ if __name__ == "__main__":
     # show_result(examples_167, solution_167, is_dict=True)
     # show_result(examples_541, solution_541_1, is_dict=True)
     # show_result(examples_541, solution_541_2, is_dict=True)
-    show_result(examples_5, solution_5_1)
+    # show_result(examples_5, solution_5_1)
+    # show_result(examples_2540, solution_2540_1, is_dict=True)
+    # show_result(examples_2540, solution_2540_2, is_dict=True)
+    show_result(examples_2441, solution_2441)
