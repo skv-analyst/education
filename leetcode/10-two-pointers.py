@@ -1,4 +1,5 @@
 from collections import Counter
+from string import ascii_letters
 
 
 def show_result(examples, solution, is_dict=None):
@@ -330,6 +331,147 @@ def solution_2441(nums):
     return ans
 
 
+# 1768. Merge Strings Alternately
+examples_1768 = [
+    {"word1": "abc", "word2": "pqr"},
+    {"word1": "ab", "word2": "pqrs"},
+    {"word1": "abcd", "word2": "pq"}
+]
+
+
+def solution_1768_1(word1, word2):
+    # Time: O(n+m)
+    # Space: O(n+m)
+    len_word1 = len(word1)
+    len_word2 = len(word2)
+
+    def mixed(word1, word2):
+        mixed_str = []
+        for w1, w2 in zip(word1, word2):
+            mixed_str.append(w1)
+            mixed_str.append(w2)
+        return ''.join(mixed_str)
+
+    ans = None
+
+    if len_word1 == len_word2:
+        ans = mixed(word1, word2)
+
+    elif len_word1 > len_word2:
+        word2 += ' ' * (len_word1 - len_word2)
+        ans = mixed(word1, word2)
+
+    elif len_word1 < len_word2:
+        word1 += ' ' * (len_word2 - len_word1)
+        ans = mixed(word1, word2)
+
+    return ans.replace(' ', '')
+
+
+def solution_1768_2(word1, word2):
+    # Time: O(n+m)
+    # Space: O(1)
+    cnt, w1, w2 = 0, 0, 0
+    ans_len = len(word1) + len(word2)
+
+    ans = []
+    while cnt < ans_len:
+        if w1 < len(word1) and w2 < len(word2):
+            ans.append(word1[w1])
+            ans.append(word2[w2])
+
+        elif w2 < len(word2):
+            ans.append(word2[w2])
+
+        elif w1 < len(word1):
+            ans.append(word1[w1])
+
+        w1 += 1
+        w2 += 1
+        cnt += 1
+
+    return ''.join(ans)
+
+
+# 917. Reverse Only Letters
+examples_917 = [
+    "ab-cd",
+    "a-bC-dEf-ghIj",
+    "Test1ng-Leet=code-Q!"
+]
+
+
+def solution_917(s):
+    # Time: O(n)
+    # Space: O(1)
+    s = list(s)
+    l, r = 0, len(s) - 1
+
+    while l < r:
+        if s[l] not in ascii_letters:
+            l += 1
+        elif s[r] not in ascii_letters:
+            r -= 1
+
+        elif s[l] and s[r] in ascii_letters:
+            s[l], s[r] = s[r], s[l]
+            l += 1
+            r -= 1
+
+    return ''.join(s)
+
+
+# 557. Reverse Words in a String III
+examples_557 = [
+    "Let's take LeetCode contest",
+    "Mr Ding"
+]
+
+
+def solution_557(s):
+    # Time: O(n)
+    # Space: O(n)
+    words = s.split(' ')
+    ans = []
+    for w in words:
+        w = list(w)
+        l, r = 0, len(w) - 1
+        while l < r:
+            w[l], w[r] = w[r], w[l]
+            l += 1
+            r -= 1
+        ans.append(''.join(w))
+
+    return ' '.join(ans)
+
+
+# 2210. Count Hills and Valleys in an Array
+examples_2210 = [
+    [2, 4, 1, 1, 6, 5],
+    [6, 6, 5, 5, 4, 1],
+    [5, 7, 7, 1, 7]
+]
+
+
+def solution_2210(nums):
+    nums_uniq = [nums[0]]
+    for i in range(1, len(nums)):
+        if nums[i] != nums[i-1]:
+            nums_uniq.append(nums[i])
+
+
+    ans = 0
+    for i in range(1, len(nums_uniq) - 1):
+        # Холмы
+        if nums_uniq[i] > nums_uniq[i - 1] and nums_uniq[i] > nums_uniq[i + 1]:
+            ans += 1
+        # Долины
+        if nums_uniq[i] < nums_uniq[i - 1] and nums_uniq[i] < nums_uniq[i + 1]:
+            ans += 1
+
+    return ans
+
+
 if __name__ == "__main__":
     # show_result(examples_354, solution_345)
     # show_result(examples_125, solution_125)
@@ -344,4 +486,9 @@ if __name__ == "__main__":
     # show_result(examples_5, solution_5_1)
     # show_result(examples_2540, solution_2540_1, is_dict=True)
     # show_result(examples_2540, solution_2540_2, is_dict=True)
-    show_result(examples_2441, solution_2441)
+    # show_result(examples_2441, solution_2441)
+    # show_result(examples_1768, solution_1768_1, is_dict=True)
+    # show_result(examples_1768, solution_1768_2, is_dict=True)
+    # show_result(examples_917, solution_917)
+    # show_result(examples_557, solution_557)
+    show_result(examples_2210, solution_2210)
