@@ -8,7 +8,8 @@ examples = [
     ""
 ]
 
-def solution(s):
+
+def solution_1(s):
     if len(s) == 0:
         return ""
 
@@ -19,7 +20,7 @@ def solution(s):
         if s[i] == s[i - 1]:
             cnt += 1
         else:
-            ans += f"{s[i-1]}{cnt if cnt > 1 else ''}"
+            ans += f"{s[i - 1]}{cnt if cnt > 1 else ''}"
             cnt = 1
 
     # Добавляем последний символ с его количеством
@@ -28,6 +29,28 @@ def solution(s):
     return ans
 
 
+def solution_2(s):
+    if len(s) == 0:
+        return ""
+
+    ans = []
+
+    s += '1'
+    start, stop = 0, 0
+    for i in range(len(s) - 1):
+        if s[i] == s[i + 1]:
+            stop += 1
+
+        else:
+            cnt = stop - start
+            ans.append(f"{str(s[i])}{cnt if cnt > 1 else ''}")
+
+            start = stop
+            stop = start
+
+    return ''.join(ans)
+
+
 if __name__ == "__main__":
     for e in examples:
-        print(f"Input: {e} \nOutput: {solution(e)}")
+        print(f"Input: {e} \nOutput: {solution_2(e)}")
