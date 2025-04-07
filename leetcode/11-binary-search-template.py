@@ -7,7 +7,6 @@ def binary_search(nums, target):
 
         if target == nums[mid]:
             ans = mid
-
         
         elif target < nums[mid]:
             r = mid - 1
