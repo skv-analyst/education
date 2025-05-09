@@ -1,0 +1,65 @@
+# Virtual environment files
+.venv/
+venv/
+env/
+.env/
+bin/
+include/
+lib/
+lib64/
+pyvenv.cfg
+pip-selfcheck.json
+Poetry.lock  # Если используете, но часто включают (зависит от стратегии)
+
+# VS Code
+.vscode/
+!.vscode/settings.json 
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ipynb_checkpoints/
+
+# Logs
+*.log
+*.tmp
+*.bak
+*.swp
+*~
+
+# Dependencies and build files
+/dist/
+/build/
+/out/
+*.egg-info/
+*.egg
+*.manifest
+*.spec
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+*.ipynb
+
+# IDE and editors
+.idea/
+.DS_Store
+*.sublime-*
+*.code-workspace
+
+# Configs and secrets
+.env.local
+.env.*.local
+secrets.yml
+config.yml
+*.secret
+
+# Test data and dumps
+/test_data/
+/dump/
+*.sqlite3
