@@ -12,7 +12,7 @@ def show_result(examples, solution, is_dict=None):
 # 704. Binary Search
 examples_704 = [
     {"nums": [-1, 0, 3, 5, 9, 12], "target": 9},
-    {"nums": [-1, 0, 3, 5, 9, 12], "target": 2}
+    {"nums": [-1, 0, 3, 5, 29, 12], "target": 2}
 ]
 
 
