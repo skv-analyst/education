@@ -69,7 +69,8 @@ def stringToTreeNode(input):
 
 
 # 144. Binary Tree Preorder Traversal
-class Solution:
+root = stringToTreeNode("[1,2,5,3,4]")
+class Solution_144:
     def preorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
 
         if not root:
@@ -89,6 +90,5 @@ class Solution:
 
         return ans
 
-
-root = stringToTreeNode("[1,2,5,3,4]")
-print(Solution().preorderTraversal(root))
+if __name__ == "__main__":
+    print(Solution_144().preorderTraversal(root))
