@@ -70,6 +70,8 @@ def stringToTreeNode(input):
 
 # 144. Binary Tree Preorder Traversal
 root = stringToTreeNode("[1,2,5,3,4]")
+
+
 class Solution_144:
     def preorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
 
@@ -90,5 +92,79 @@ class Solution_144:
 
         return ans
 
+
+# 104. Maximum Depth of Binary Tree
+class Solution_104:
+    def maxDepth(self, root: Optional[TreeNode]) -> int:
+
+        if not root:
+            return 0
+
+        stack = [(root, 1)]
+        ans = 0
+
+        while stack:
+            cur, depth = stack.pop()
+            ans = max(ans, depth)
+
+            if cur.left:
+                stack.append((cur.left, depth + 1))
+            if cur.right:
+                stack.append((cur.right, depth + 1))
+
+        return ans
+
+
+# 404. Sum of Left Leaves
+class Solution_404:
+    def sumOfLeftLeaves(self, root: Optional[TreeNode]) -> int:
+
+        if not root:
+            return 0
+
+        ans = 0
+        stack = [(root, False)]
+
+        while stack:
+            cur, is_left = stack.pop()
+
+            if is_left and not cur.left and not cur.right:
+                ans += cur.val
+
+            if cur.left:
+                stack.append((cur.left, True))
+            if cur.right:
+                stack.append((cur.right, False))
+
+        return ans
+
+
+# 112. Path Sum
+class Solution_112:
+    def hasPathSum(self, root: Optional[TreeNode], targetSum: int) -> bool:
+
+        if not root:
+            return False
+
+        stack = [(root, targetSum)]
+
+        while stack:
+            cur, cur_sum = stack.pop()
+            cur_sum -= cur.val
+
+            if not cur.left and not cur.right and cur_sum == 0:
+                return True
+
+            if cur.left:
+                stack.append((cur.left, cur_sum))
+            if cur.right:
+                stack.append((cur.right, cur_sum))
+
+        return False
+
+
 if __name__ == "__main__":
-    print(Solution_144().preorderTraversal(root))
+    # print(Solution_144().preorderTraversal(root))
+    # print(Solution_104().maxDepth(root))
+    # print(Solution_404().sumOfLeftLeaves(root))
+    print(Solution_112().hasPathSum(root, 10))
