@@ -162,9 +162,120 @@ class Solution_112:
 
         return False
 
+# 100. Same Tree
+class Solution_100:
+    def isSameTree(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
+        
+        stack = [(p, q)]
+
+        while stack:
+            p, q = stack.pop()
+
+            if p and not q:
+                return False
+
+            if not p and q:
+                return False
+
+            if not p and not q:
+                pass
+
+            if p and q:
+                if p.val == q.val:
+                    pass
+
+                if p.val != q.val:
+                    return False
+
+                stack.append((p.left, q.left))
+                stack.append((p.right, q.right))
+
+        return True
+
+# 226. Invert Binary Tree
+class Solution_226:
+    def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
+
+        if not root:
+            return None
+        
+        stack = [root]
+
+        while stack:
+            cur = stack.pop()
+
+            cur.left, cur.right = cur.right, cur.left
+
+            if cur.left:
+                stack.append(cur.left)
+            if cur.right:
+                stack.append(cur.right)
+
+        return root
+
+# 700. Search in a Binary Search Tree
+class Solution_700:
+    def searchBST(self, root: Optional[TreeNode], val: int) -> Optional[TreeNode]:
+        if not root:
+            return None
+
+        stack = [root]
+
+        # Time: O(n)
+        # Space: O(h)
+        # while stack:
+        #     cur = stack.pop()
+
+        #     if cur.val == val:
+        #         return cur
+
+        #     if cur.left:
+        #         stack.append(cur.left)
+        #     if cur.right:
+        #         stack.append(cur.right)
+
+        # Time: O(log_n)
+        # Space: O(1)
+        while stack:
+            cur = stack.pop()
+
+            if cur.val == val:
+                return cur
+
+            if val < cur.val:
+                if cur.left:
+                    stack.append(cur.left)
+            else:
+                if cur.right:
+                    stack.append(cur.right)
+
+# 98. Validate Binary Search Tree
+class Solution_98:
+    def isValidBST(self, root: Optional[TreeNode]) -> bool:
+        
+        stack = [(root, -float('inf'), float('inf'))]
+
+        while stack:
+            cur, lo, hi = stack.pop()
+
+            if not lo < cur.val < hi:
+                return False
+
+            if cur.left:
+                stack.append((cur.left, lo, cur.val))
+            if cur.right:
+                stack.append((cur.right, cur.val, hi))
+
+        return True
+
+
 
 if __name__ == "__main__":
     # print(Solution_144().preorderTraversal(root))
     # print(Solution_104().maxDepth(root))
     # print(Solution_404().sumOfLeftLeaves(root))
-    print(Solution_112().hasPathSum(root, 10))
+    # print(Solution_112().hasPathSum(root, 10))
+    # print(Solution_100().isSameTree(root, root))    
+    # print(Solution_226().invertTree(root))
+    # print(Solution_700().searchBST(root, 3))
+    print(Solution_98().isValidBST(root))
