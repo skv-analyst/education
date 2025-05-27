@@ -162,10 +162,11 @@ class Solution_112:
 
         return False
 
+
 # 100. Same Tree
 class Solution_100:
     def isSameTree(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
-        
+
         stack = [(p, q)]
 
         while stack:
@@ -192,13 +193,14 @@ class Solution_100:
 
         return True
 
+
 # 226. Invert Binary Tree
 class Solution_226:
     def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
 
         if not root:
             return None
-        
+
         stack = [root]
 
         while stack:
@@ -212,6 +214,7 @@ class Solution_226:
                 stack.append(cur.right)
 
         return root
+
 
 # 700. Search in a Binary Search Tree
 class Solution_700:
@@ -249,11 +252,12 @@ class Solution_700:
                 if cur.right:
                     stack.append(cur.right)
 
+
 # 98. Validate Binary Search Tree
 class Solution_98:
     def isValidBST(self, root: Optional[TreeNode]) -> bool:
-        
-        stack = [(root, -float('inf'), float('inf'))]
+
+        stack = [(root, -float("inf"), float("inf"))]
 
         while stack:
             cur, lo, hi = stack.pop()
@@ -269,13 +273,83 @@ class Solution_98:
         return True
 
 
+# 257. Binary Tree Paths
+class Solution_257:
+    def binaryTreePaths(self, root: Optional[TreeNode]) -> List[str]:
+
+        ans = []
+        stack = [(root, "")]
+
+        while stack:
+            cur, path = stack.pop()
+            path += str(cur.val) + "->"
+
+            if not cur.left and not cur.right:
+                ans.append(path[:-2])
+
+            if cur.left:
+                stack.append((cur.left, path))
+            if cur.right:
+                stack.append((cur.right, path))
+
+        return ans
+
+
+class Solution_257_2:
+    def binaryTreePaths(self, root: Optional[TreeNode]) -> List[str]:
+
+        ans = []
+        stack = [(root, [])]
+
+        while stack:
+            cur, path = stack.pop()
+            path.append(str(cur.val))
+
+            if not cur.left and not cur.right:
+                ans.append("->".join(path))
+
+            if cur.left:
+                stack.append((cur.left, path.copy()))
+            if cur.right:
+                stack.append((cur.right, path.copy()))
+
+        return ans
+
+
+# 113. Path Sum II
+class Solution_113:
+    def pathSum(self, root: Optional[TreeNode], targetSum: int) -> List[List[int]]:
+
+        if not root:
+            return []
+
+        ans = []
+
+        stack = [(root, [])]
+
+        while stack:
+            cur, path = stack.pop()
+            path.append(cur.val)
+
+            if not cur.left and not cur.right and sum(path) == targetSum:
+                ans.append(path)
+
+            if cur.left:
+                stack.append((cur.left, path.copy()))
+            if cur.right:
+                stack.append((cur.right, path.copy()))
+
+        return ans
+
 
 if __name__ == "__main__":
     # print(Solution_144().preorderTraversal(root))
     # print(Solution_104().maxDepth(root))
     # print(Solution_404().sumOfLeftLeaves(root))
     # print(Solution_112().hasPathSum(root, 10))
-    # print(Solution_100().isSameTree(root, root))    
+    # print(Solution_100().isSameTree(root, root))
     # print(Solution_226().invertTree(root))
     # print(Solution_700().searchBST(root, 3))
-    print(Solution_98().isValidBST(root))
+    # print(Solution_98().isValidBST(root))
+    # print(Solution_257().binaryTreePaths(root))
+    print(Solution_113().pathSum(root, 10))
